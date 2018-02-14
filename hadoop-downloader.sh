@@ -1,4 +1,5 @@
 #!/bin/bash
+
 hadoop_location=$(echo "/usr/local/hadoop")
 
 function hadoop_search { # search Hadoop package version from ftp
@@ -41,6 +42,35 @@ function hadoop_download {
     echo "Downloading $hadoop_version ..."
     sudo curl --progress-bar http://ftp.tc.edu.tw/pub/Apache/hadoop/common/$hadoop_version/$hadoop_version.tar.gz | sudo tar xz 
     sudo chown -R hadoop $hadoop_location
+}
+
+function setup_core_xml {
+    export HADOOP_HOME=$hadoop_location
+    local tmpFile=/tmp/core_site.xml
+    local file=$HADOOP_HOME/etc/hadoop/core-site.xml
+    sudo rm -rf $
+    echo "========================================"
+    echo "Creating core-site.xml..."
+    read -p "Please type option for \"fs.default.name\" :" default_name
+    read -p "Please type option for \"hadoop.tmp.dir\" :" tmp_dir
+    cat >> $tmpfile <<EOF
+    <?xml version="1.0" encoding="UTF-8"?>
+    <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+    <configuration>
+    <property>
+        <name>hadoop.tmp.dir</name>
+        <value>/tmp/hadooop</value>
+        <description>Temporary directories.</description>
+    </property>
+
+    <property>
+        <name>fs.default.name</name>
+        <value>hdfs://localhost:54310</value>
+        <description>A URI whose scheme and authority determine the FileSystem implementation. </description>
+    </property>
+    </configuration>
+
+    EOF
 }
 
 hadoop_search
