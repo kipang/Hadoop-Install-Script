@@ -53,24 +53,6 @@ function setup_core_xml {
     echo "Creating core-site.xml..."
     read -p "Please type option for \"fs.default.name\" :" default_name
     read -p "Please type option for \"hadoop.tmp.dir\" :" tmp_dir
-    cat >> $tmpfile <<EOF
-    <?xml version="1.0" encoding="UTF-8"?>
-    <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
-    <configuration>
-    <property>
-        <name>hadoop.tmp.dir</name>
-        <value>/tmp/hadooop</value>
-        <description>Temporary directories.</description>
-    </property>
-
-    <property>
-        <name>fs.default.name</name>
-        <value>hdfs://localhost:54310</value>
-        <description>A URI whose scheme and authority determine the FileSystem implementation. </description>
-    </property>
-    </configuration>
-
-    EOF
 }
 
 hadoop_search
