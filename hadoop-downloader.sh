@@ -1,8 +1,16 @@
 #!/bin/bash
 
+
+## Check root permissions
+if [ $USER != "root" ]; then
+    echo "root permission required"
+    exit 1
+fi
+
 hadoop_location=$(echo "/usr/local/hadoop")
 
-function hadoop_search { # search Hadoop package version from ftp
+# search Hadoop package version from ftp
+function hadoop_search { 
     echo
     echo "receving list of hadoop packages..."
     echo "Please select hadoop package under below"
@@ -53,6 +61,14 @@ function setup_core_xml {
     echo "Creating core-site.xml..."
     read -p "Please type option for \"fs.default.name\" :" default_name
     read -p "Please type option for \"hadoop.tmp.dir\" :" tmp_dir
+}
+
+function ssh_keygen {
+    echo "========================================"
+    echo "Configure Host/Clusters..."
+    echo "Trying to change /etc/hosts"
+    while true; do
+        read -p "Please type number of your hosts: "
 }
 
 hadoop_search
